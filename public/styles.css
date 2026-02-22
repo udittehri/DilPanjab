@@ -85,9 +85,6 @@ p {
   border-radius: 20px;
   padding: 1.4rem 1.5rem;
   animation: slideDown 0.6s ease-out;
-  display: grid;
-  gap: 1rem;
-  align-items: center;
 }
 
 .kicker {
@@ -113,16 +110,6 @@ p {
   color: var(--muted);
   margin-top: 0.35rem;
   font-weight: 600;
-}
-
-.hero-photo {
-  width: 100%;
-  max-width: 280px;
-  justify-self: center;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 24px rgba(44, 26, 14, 0.16);
-  background: #fff;
 }
 
 .layout {
@@ -460,10 +447,6 @@ button.muted {
 }
 
 @media (min-width: 840px) {
-  .hero-content {
-    grid-template-columns: 1.2fr 0.8fr;
-  }
-
   .meal-card {
     grid-template-columns: 0.9fr 1.1fr;
     align-items: center;

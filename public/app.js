@@ -9,14 +9,12 @@ const elements = {
   businessAddress: document.querySelector('#businessAddress'),
   businessPhone: document.querySelector('#businessPhone'),
   collectionNote: document.querySelector('#collectionNote'),
-  mealImage: document.querySelector('#mealImage'),
   todaysDate: document.querySelector('#todaysDate'),
   mealName: document.querySelector('#mealName'),
   mealDescription: document.querySelector('#mealDescription'),
   mealPrice: document.querySelector('#mealPrice'),
   mealAvailability: document.querySelector('#mealAvailability'),
   orderForm: document.querySelector('#orderForm'),
-  orderEstimate: document.querySelector('#orderEstimate'),
   orderFeedback: document.querySelector('#orderFeedback'),
   menuList: document.querySelector('#menuList'),
   adminLoginForm: document.querySelector('#adminLoginForm'),
@@ -28,37 +26,6 @@ const elements = {
   adminMenuList: document.querySelector('#adminMenuList'),
   ordersList: document.querySelector('#ordersList')
 };
-
-const DEFAULT_IMAGES = {
-  hero: '/images/hero-thali.svg',
-  today: '/images/today-curry.svg',
-  burger: '/images/menu-burger.svg',
-  curry: '/images/menu-curry.svg',
-  paneer: '/images/menu-paneer-sandwich.svg',
-  tikki: '/images/menu-tikki.svg',
-  fries: '/images/menu-fries.svg',
-  generic: '/images/menu-default.svg'
-};
-
-function imageFromName(name, isToday = false) {
-  const label = String(name || '').toLowerCase();
-  if (label.includes('paneer')) return DEFAULT_IMAGES.paneer;
-  if (label.includes('tikki')) return DEFAULT_IMAGES.tikki;
-  if (label.includes('fries')) return DEFAULT_IMAGES.fries;
-  if (label.includes('burger')) return DEFAULT_IMAGES.burger;
-  if (label.includes('curry')) return DEFAULT_IMAGES.curry;
-  if (isToday) return DEFAULT_IMAGES.today;
-  return DEFAULT_IMAGES.generic;
-}
-
-function cleanImage(input, fallback) {
-  const value = String(input || '').trim();
-  if (!value) return fallback;
-  if (value.startsWith('/') || value.startsWith('images/') || /^https?:\/\//i.test(value)) {
-    return value;
-  }
-  return fallback;
-}
 
 function setFeedback(node, message, isError = false) {
   if (!node) return;
@@ -112,21 +79,6 @@ function prettyDateFromYMD(value) {
   return new Date(year, month - 1, day).toLocaleDateString();
 }
 
-function updateOrderEstimate() {
-  if (!elements.orderForm || !elements.orderEstimate) return;
-
-  const quantityField = getField(elements.orderForm, 'quantity');
-  const pickupDateField = getField(elements.orderForm, 'pickupDate');
-  const unitPrice = Number(state.publicData?.todaysMeal?.price || 0);
-  const quantityRaw = Number(quantityField?.value || 1);
-  const quantity = Number.isFinite(quantityRaw) && quantityRaw > 0 ? quantityRaw : 1;
-  const pickupDate = pickupDateField?.value;
-  const pickupLabel = pickupDate ? prettyDateFromYMD(pickupDate) : 'choose a date';
-  const total = Number((quantity * unitPrice).toFixed(2));
-
-  elements.orderEstimate.textContent = `Estimated total: ${money(total)} · Pickup ${pickupLabel} at 7:00 PM`;
-}
-
 function toWhatsAppPhone(phone) {
   return String(phone || '').replace(/\D/g, '');
 }
@@ -151,20 +103,14 @@ function renderPublic(data) {
   elements.collectionNote.textContent = data.business?.collectionNote || 'Collection at 7:00 PM daily.';
 
   const meal = data.todaysMeal || {};
-  const mealImage = cleanImage(meal.image, imageFromName(meal.name, true));
   elements.todaysDate.textContent = meal.date ? prettyDate(meal.date) : new Date().toLocaleDateString();
   elements.mealName.textContent = meal.name || 'Meal not set';
   elements.mealDescription.textContent = meal.description || '';
   elements.mealPrice.textContent = `Price: ${money(meal.price)}`;
   elements.mealAvailability.textContent = meal.available ? 'Available to order now' : 'Not available right now';
   elements.mealAvailability.classList.toggle('error', !meal.available);
-  if (elements.mealImage) {
-    elements.mealImage.src = mealImage;
-    elements.mealImage.alt = meal.name ? `${meal.name} image` : "Today's meal image";
-  }
 
   elements.orderForm.querySelector('button[type="submit"]').disabled = !meal.available;
-  updateOrderEstimate();
 
   if (!data.menu?.length) {
     elements.menuList.innerHTML = '<p class="helper">Menu will appear here.</p>';
@@ -173,7 +119,6 @@ function renderPublic(data) {
       .map(
         (item) => `
         <article class="menu-item">
-          <img class="menu-item-visual" src="${escapeHtml(cleanImage(item.image, imageFromName(item.name)))}" alt="${escapeHtml(item.name)}" loading="lazy" />
           <div class="menu-item-head">
             <h3>${escapeHtml(item.name)}</h3>
             <p class="price">${money(item.price)}</p>
@@ -203,14 +148,12 @@ function renderAdmin(data) {
   const todayDescription = getField(elements.todayForm, 'description');
   const todayPrice = getField(elements.todayForm, 'price');
   const todayDate = getField(elements.todayForm, 'date');
-  const todayImage = getField(elements.todayForm, 'image');
   const todayAvailable = getField(elements.todayForm, 'available');
 
   if (todayName) todayName.value = data.todaysMeal?.name || '';
   if (todayDescription) todayDescription.value = data.todaysMeal?.description || '';
   if (todayPrice) todayPrice.value = data.todaysMeal?.price ?? '';
   if (todayDate) todayDate.value = data.todaysMeal?.date || '';
-  if (todayImage) todayImage.value = data.todaysMeal?.image || '';
   if (todayAvailable) todayAvailable.checked = Boolean(data.todaysMeal?.available);
 
   if (!data.menu?.length) {
@@ -220,7 +163,6 @@ function renderAdmin(data) {
       .map(
         (item) => `
       <article class="card" data-menu-id="${item.id}">
-        <img class="admin-item-image" src="${escapeHtml(cleanImage(item.image, imageFromName(item.name)))}" alt="${escapeHtml(item.name)}" loading="lazy" />
         <div class="card-head">
           <p class="card-title">${escapeHtml(item.name)} · ${money(item.price)}</p>
           <span class="pill ${item.available ? '' : 'off'}">${item.available ? 'Visible' : 'Hidden'}</span>
@@ -317,9 +259,8 @@ async function refreshAdmin(showAuthError = true) {
 elements.orderForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   setFeedback(elements.orderFeedback, 'Placing order...');
-  const form = event.currentTarget;
 
-  const formData = new FormData(form);
+  const formData = new FormData(event.currentTarget);
 
   const payload = {
     customerName: formData.get('customerName'),
@@ -335,10 +276,9 @@ elements.orderForm.addEventListener('submit', async (event) => {
       body: JSON.stringify(payload)
     });
 
-    form.reset();
-    const quantityField = getField(form, 'quantity');
+    event.currentTarget.reset();
+    const quantityField = getField(event.currentTarget, 'quantity');
     if (quantityField) quantityField.value = '1';
-    updateOrderEstimate();
     setFeedback(
       elements.orderFeedback,
       `${result.message} Pickup: ${prettyDateFromYMD(result.order.pickupDate)} at ${result.order.pickupTime}. Order ID: ${result.order.id}`
@@ -351,8 +291,7 @@ elements.orderForm.addEventListener('submit', async (event) => {
 
 elements.adminLoginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = event.currentTarget;
-  const formData = new FormData(form);
+  const formData = new FormData(event.currentTarget);
   const pin = String(formData.get('pin') || '').trim();
 
   try {
@@ -363,7 +302,7 @@ elements.adminLoginForm.addEventListener('submit', async (event) => {
     state.adminPin = pin;
     window.localStorage.setItem('dilpanjab_admin_pin', pin);
     setFeedback(elements.adminFeedback, 'Admin unlocked');
-    form.reset();
+    event.currentTarget.reset();
     await refreshAdmin(true);
   } catch (error) {
     state.adminPin = '';
@@ -375,8 +314,7 @@ elements.adminLoginForm.addEventListener('submit', async (event) => {
 
 elements.businessForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = event.currentTarget;
-  const formData = new FormData(form);
+  const formData = new FormData(event.currentTarget);
 
   const payload = {
     name: formData.get('name'),
@@ -399,15 +337,13 @@ elements.businessForm.addEventListener('submit', async (event) => {
 
 elements.todayForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = event.currentTarget;
-  const formData = new FormData(form);
+  const formData = new FormData(event.currentTarget);
 
   const payload = {
     name: formData.get('name'),
     description: formData.get('description'),
     price: Number(formData.get('price')),
     date: formData.get('date'),
-    image: formData.get('image'),
     available: formData.get('available') === 'on'
   };
 
@@ -425,14 +361,12 @@ elements.todayForm.addEventListener('submit', async (event) => {
 
 elements.menuForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const form = event.currentTarget;
-  const formData = new FormData(form);
+  const formData = new FormData(event.currentTarget);
 
   const payload = {
     name: formData.get('name'),
     description: formData.get('description'),
     price: Number(formData.get('price')),
-    image: formData.get('image'),
     available: formData.get('available') === 'on'
   };
 
@@ -441,8 +375,8 @@ elements.menuForm.addEventListener('submit', async (event) => {
       method: 'POST',
       body: JSON.stringify(payload)
     }, true);
-    form.reset();
-    const availableField = getField(form, 'available');
+    event.currentTarget.reset();
+    const availableField = getField(event.currentTarget, 'available');
     if (availableField) availableField.checked = true;
     setFeedback(elements.adminFeedback, 'Menu item added');
     await Promise.all([refreshAdmin(), refreshPublic()]);
@@ -476,7 +410,6 @@ elements.adminMenuList.addEventListener('click', async (event) => {
             name: item.name,
             description: item.description,
             price: item.price,
-            image: item.image,
             available: !item.available
           })
         },
@@ -492,7 +425,6 @@ elements.adminMenuList.addEventListener('click', async (event) => {
       const description = window.prompt('Description:', item.description || '') ?? '';
       const priceValue = window.prompt('Price:', String(item.price));
       if (priceValue === null) return;
-      const image = window.prompt('Image URL:', item.image || '') ?? '';
 
       await api(
         `/api/admin/menu/${id}`,
@@ -502,7 +434,6 @@ elements.adminMenuList.addEventListener('click', async (event) => {
             name,
             description,
             price: Number(priceValue),
-            image,
             available: item.available
           })
         },
@@ -571,20 +502,12 @@ elements.ordersList.addEventListener('click', async (event) => {
 });
 
 (async function init() {
-  const quantityField = getField(elements.orderForm, 'quantity');
   const pickupDateField = getField(elements.orderForm, 'pickupDate');
-  if (quantityField) {
-    quantityField.addEventListener('input', updateOrderEstimate);
-    quantityField.addEventListener('change', updateOrderEstimate);
-  }
   if (pickupDateField) {
     pickupDateField.min = new Date().toISOString().slice(0, 10);
-    pickupDateField.addEventListener('input', updateOrderEstimate);
-    pickupDateField.addEventListener('change', updateOrderEstimate);
   }
 
   await refreshPublic();
-  updateOrderEstimate();
   if (state.adminPin) {
     await refreshAdmin(false);
   }
