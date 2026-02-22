@@ -1,0 +1,59 @@
+{
+  "business": {
+    "name": "DilPanjab",
+    "address": "DilPanjab, Papatoetoe",
+    "phone": "",
+    "collectionNote": "Collect at 7:00 PM every day. Pay on collection."
+  },
+  "todaysMeal": {
+    "name": "Homestyle Chicken Curry and Aloo Gobhi",
+    "description": "Home-cooked chicken curry served with aloo gobhi.",
+    "price": 14.99,
+    "available": true,
+    "date": "",
+    "image": "/images/today-curry.svg"
+  },
+  "menu": [
+    {
+      "id": "menu-1",
+      "name": "Burger",
+      "description": "Classic street-style burger.",
+      "price": 9.99,
+      "image": "/images/menu-burger.svg",
+      "available": true
+    },
+    {
+      "id": "menu-2",
+      "name": "Chicken Curry",
+      "description": "Punjabi-style chicken curry.",
+      "price": 14.99,
+      "image": "/images/menu-curry.svg",
+      "available": true
+    },
+    {
+      "id": "menu-3",
+      "name": "Paneer Sandwich",
+      "description": "Grilled paneer sandwich with chutney.",
+      "price": 8.99,
+      "image": "/images/menu-paneer-sandwich.svg",
+      "available": true
+    },
+    {
+      "id": "menu-4",
+      "name": "Veg Tikki Burger",
+      "description": "Crispy veg tikki patty with fresh toppings.",
+      "price": 9.49,
+      "image": "/images/menu-tikki.svg",
+      "available": true
+    },
+    {
+      "id": "menu-5",
+      "name": "Masala Fries",
+      "description": "Spiced fries and quick snacks, plus rotating specials.",
+      "price": 6.49,
+      "image": "/images/menu-fries.svg",
+      "available": true
+    }
+  ],
+  "orders": []
+}

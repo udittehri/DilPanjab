@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Chicken curry and aloo gobhi</title>
+  <desc id="desc">Illustrated bowl of chicken curry with side dish</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0d2"/>
+      <stop offset="1" stop-color="#ffdca8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="520" rx="220" ry="38" fill="#b78455" opacity="0.22"/>
+  <circle cx="400" cy="320" r="180" fill="#faf5ea" stroke="#d5c5a8" stroke-width="12"/>
+  <circle cx="400" cy="320" r="128" fill="#cb5c24"/>
+  <g fill="#f1c16e">
+    <circle cx="338" cy="298" r="18"/>
+    <circle cx="452" cy="282" r="19"/>
+    <circle cx="386" cy="352" r="17"/>
+    <circle cx="470" cy="352" r="16"/>
+  </g>
+  <g fill="#f8e0a0" opacity="0.95">
+    <circle cx="280" cy="232" r="34"/>
+    <circle cx="538" cy="412" r="30"/>
+  </g>
+  <g fill="#2f6f3e">
+    <circle cx="332" cy="258" r="7"/>
+    <circle cx="444" cy="338" r="8"/>
+    <circle cx="432" cy="290" r="6"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Veg tikki burger</title>
+  <desc id="desc">Illustration of veg patty burger</desc>
+  <rect width="800" height="500" fill="#ffe2bc"/>
+  <ellipse cx="400" cy="410" rx="220" ry="33" fill="#aa7a50" opacity="0.24"/>
+  <path d="M210 248c0-84 84-134 190-134s190 50 190 134H210z" fill="#eeb35a"/>
+  <rect x="220" y="252" width="360" height="24" rx="12" fill="#47823f"/>
+  <rect x="226" y="278" width="348" height="18" rx="9" fill="#f3e3bc"/>
+  <rect x="238" y="300" width="324" height="42" rx="18" fill="#6e4a2a"/>
+  <rect x="228" y="346" width="344" height="44" rx="18" fill="#d7983f"/>
+  <circle cx="348" cy="174" r="7" fill="#fff1d3"/>
+  <circle cx="436" cy="166" r="7" fill="#fff1d3"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Paneer sandwich</title>
+  <desc id="desc">Illustration of grilled paneer sandwich triangles</desc>
+  <rect width="800" height="500" fill="#ffe9c8"/>
+  <ellipse cx="400" cy="410" rx="210" ry="30" fill="#aa7a4f" opacity="0.23"/>
+  <polygon points="250,350 390,140 530,350" fill="#e8bf74" stroke="#d29c4a" stroke-width="10"/>
+  <polygon points="300,338 390,200 480,338" fill="#f5deaf"/>
+  <rect x="322" y="258" width="135" height="22" rx="11" fill="#e07d31"/>
+  <rect x="328" y="284" width="124" height="20" rx="10" fill="#3f7b44"/>
+  <line x1="390" y1="160" x2="390" y2="346" stroke="#d19c55" stroke-width="6"/>
+</svg>

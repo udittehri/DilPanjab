@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Chicken curry</title>
+  <desc id="desc">Illustration of curry bowl</desc>
+  <rect width="800" height="500" fill="#ffe3b7"/>
+  <ellipse cx="400" cy="415" rx="210" ry="32" fill="#b6885b" opacity="0.24"/>
+  <circle cx="400" cy="255" r="160" fill="#fff6e8" stroke="#d9c9ac" stroke-width="10"/>
+  <circle cx="400" cy="255" r="115" fill="#c75324"/>
+  <g fill="#efb85e">
+    <circle cx="338" cy="238" r="16"/>
+    <circle cx="430" cy="224" r="18"/>
+    <circle cx="464" cy="286" r="16"/>
+    <circle cx="374" cy="295" r="14"/>
+  </g>
+  <g fill="#32743f">
+    <circle cx="354" cy="215" r="6"/>
+    <circle cx="446" cy="252" r="7"/>
+    <circle cx="420" cy="302" r="6"/>
+  </g>
+</svg>

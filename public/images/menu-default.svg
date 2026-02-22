@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Food item</title>
+  <desc id="desc">Generic food plate illustration</desc>
+  <rect width="800" height="500" fill="#ffe8c7"/>
+  <ellipse cx="400" cy="410" rx="200" ry="30" fill="#ab7c51" opacity="0.23"/>
+  <circle cx="400" cy="250" r="150" fill="#fff6e8" stroke="#dbc9aa" stroke-width="10"/>
+  <circle cx="400" cy="250" r="100" fill="#eaa357"/>
+  <circle cx="360" cy="230" r="16" fill="#f4d18f"/>
+  <circle cx="438" cy="268" r="14" fill="#f4d18f"/>
+  <circle cx="410" cy="216" r="12" fill="#3d7b46"/>
+</svg>

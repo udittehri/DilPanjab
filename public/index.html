@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DilPanjab | Meal of the Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+    <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+    <header class="hero">
+      <div class="hero-content">
+        <div>
+          <p class="kicker">Daily Punjabi Meals</p>
+          <h1 id="businessName">DilPanjab</h1>
+          <p class="hero-line">Order meal of the day now. Pay when you collect.</p>
+          <p id="businessAddress" class="address"></p>
+          <p id="businessPhone" class="phone"></p>
+        </div>
+        <img
+          class="hero-photo"
+          src="images/hero-thali.svg"
+          alt="Punjabi meal platter with curry and naan"
+          loading="eager"
+        />
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel" aria-labelledby="todaysMealHeading">
+        <div class="panel-head">
+          <h2 id="todaysMealHeading">What’s Today?</h2>
+          <span id="todaysDate" class="badge"></span>
+        </div>
+
+        <article class="meal-card" id="todaysMealCard">
+          <img id="mealImage" class="meal-image" src="images/today-curry.svg" alt="Today's meal" loading="lazy" />
+          <div class="meal-copy">
+            <h3 id="mealName">Loading...</h3>
+            <p id="mealDescription"></p>
+            <p id="mealPrice" class="meal-price"></p>
+            <p id="mealAvailability" class="meal-availability"></p>
+          </div>
+        </article>
+
+        <form id="orderForm" class="form-stack">
+          <h3>Place Your Order</h3>
+          <p class="helper">1. Choose date 2. Enter details 3. Collect at 7:00 PM and pay.</p>
+          <label>
+            Your Name
+            <input type="text" name="customerName" required maxlength="80" />
+          </label>
+
+          <label>
+            Phone Number
+            <input type="text" name="phone" required maxlength="40" />
+          </label>
+
+          <label>
+            Quantity
+            <input type="number" name="quantity" min="1" max="20" value="1" required />
+          </label>
+
+          <label>
+            Pickup Date
+            <input type="date" name="pickupDate" required />
+          </label>
+
+          <label>
+            Notes (Optional)
+            <textarea name="note" maxlength="300" rows="3" placeholder="Any special requests?"></textarea>
+          </label>
+
+          <button type="submit">Order Meal of the Day</button>
+          <p id="collectionNote" class="helper">Collection at 7:00 PM daily.</p>
+          <p id="orderEstimate" class="order-estimate">Estimated total: $0.00</p>
+          <p class="helper">Payment: Pay when you collect.</p>
+          <p id="orderFeedback" class="feedback" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="menuHeading">
+        <div class="panel-head">
+          <h2 id="menuHeading">Menu & Prices</h2>
+        </div>
+        <div id="menuList" class="menu-list"></div>
+      </section>
+
+      <section class="panel admin" aria-labelledby="adminHeading">
+        <div class="panel-head">
+          <h2 id="adminHeading">Admin</h2>
+          <p class="helper">Update today’s meal, menu, address, and order status.</p>
+        </div>
+
+        <form id="adminLoginForm" class="inline-form">
+          <label>
+            Admin PIN
+            <input type="password" name="pin" placeholder="Enter PIN" required />
+          </label>
+          <button type="submit">Unlock Admin</button>
+          <p id="adminFeedback" class="feedback" aria-live="polite"></p>
+        </form>
+        <p class="helper">Default PIN is 1010 unless `ADMIN_PIN` is set on the server.</p>
+
+        <div id="adminArea" class="admin-area hidden">
+          <div class="admin-grid">
+            <form id="businessForm" class="form-stack">
+              <h3>Business Details</h3>
+              <label>
+                Business Name
+                <input type="text" name="name" required maxlength="80" />
+              </label>
+              <label>
+                Address
+                <input type="text" name="address" required maxlength="250" />
+              </label>
+              <label>
+                Phone
+                <input type="text" name="phone" maxlength="40" />
+              </label>
+              <label>
+                Collection Note
+                <input type="text" name="collectionNote" maxlength="200" />
+              </label>
+              <button type="submit">Save Business Info</button>
+            </form>
+
+            <form id="todayForm" class="form-stack">
+              <h3>Update What’s Today?</h3>
+              <label>
+                Meal Name
+                <input type="text" name="name" required maxlength="120" />
+              </label>
+              <label>
+                Description
+                <textarea name="description" maxlength="300" rows="3"></textarea>
+              </label>
+              <label>
+                Price
+                <input type="number" name="price" min="0" step="0.01" required />
+              </label>
+              <label>
+                Date
+                <input type="date" name="date" />
+              </label>
+              <label>
+                Meal Image URL
+                <input type="text" name="image" maxlength="500" placeholder="/images/today-curry.svg or https://..." />
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="available" />
+                Available for orders
+              </label>
+              <button type="submit">Save Today’s Meal</button>
+            </form>
+          </div>
+
+          <form id="menuForm" class="form-stack">
+            <h3>Add Menu Item</h3>
+            <div class="admin-grid compact">
+              <label>
+                Name
+                <input type="text" name="name" required maxlength="120" />
+              </label>
+              <label>
+                Price
+                <input type="number" name="price" min="0" step="0.01" required />
+              </label>
+            </div>
+            <label>
+              Description
+              <textarea name="description" maxlength="300" rows="2"></textarea>
+            </label>
+            <label>
+              Image URL
+              <input type="text" name="image" maxlength="500" placeholder="/images/menu-burger.svg or https://..." />
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="available" checked />
+              Show in customer menu
+            </label>
+            <button type="submit">Add Item</button>
+          </form>
+
+          <section>
+            <h3>Manage Menu</h3>
+            <div id="adminMenuList" class="admin-list"></div>
+          </section>
+
+          <section>
+            <h3>Orders</h3>
+            <div id="ordersList" class="admin-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

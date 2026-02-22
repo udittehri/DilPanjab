@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">DilPanjab meal platter</title>
+  <desc id="desc">Illustration of Punjabi thali with curry, naan and salad</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe9c9"/>
+      <stop offset="1" stop-color="#ffd4a3"/>
+    </linearGradient>
+    <radialGradient id="plate" cx="0.5" cy="0.45" r="0.52">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#efe7d6"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="640" fill="url(#bg)"/>
+  <ellipse cx="480" cy="560" rx="280" ry="46" fill="#ca9b61" opacity="0.22"/>
+  <circle cx="480" cy="320" r="230" fill="url(#plate)" stroke="#d2c2a3" stroke-width="10"/>
+  <circle cx="380" cy="260" r="72" fill="#f6b85d" stroke="#d99030" stroke-width="8"/>
+  <circle cx="380" cy="260" r="45" fill="#cc5a20" opacity="0.86"/>
+  <circle cx="578" cy="260" r="72" fill="#f9d487" stroke="#d9a942" stroke-width="8"/>
+  <circle cx="578" cy="260" r="46" fill="#346e3c" opacity="0.9"/>
+  <circle cx="480" cy="390" r="82" fill="#f2f0ec" stroke="#d6cdc0" stroke-width="7"/>
+  <path d="M404 412c55-40 96-40 152 0" fill="none" stroke="#e28b3c" stroke-width="22" stroke-linecap="round"/>
+  <path d="M396 444c59-42 110-42 168 0" fill="none" stroke="#f4b053" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="476" cy="324" r="18" fill="#d33f2b"/>
+  <circle cx="510" cy="336" r="12" fill="#2f6f3e"/>
+</svg>
