@@ -61,6 +61,28 @@ ADMIN_PIN=your_secure_pin npm start
 - Backend API: `server.js`
 - Frontend: `public/index.html`, `public/styles.css`, `public/app.js`
 - Data: `data/db.json`
+- Amplify build adapter: `scripts/build-amplify.js`
+- Amplify pipeline config: `amplify.yml`
+
+## AWS Amplify deployment (prototype)
+
+This repository is now configured for Amplify Hosting with Express compute output.
+
+1. In Amplify Console, choose `Host web app` and connect this GitHub repo.
+2. Keep the build settings from `amplify.yml` (Amplify will auto-detect it).
+3. Add environment variable in Amplify:
+
+```text
+ADMIN_PIN=your_secure_pin
+```
+
+4. Deploy the `main` branch.
+
+Notes for prototype:
+
+- The app writes data to `/tmp/dilpanjab/db.json` in Amplify compute.
+- This keeps the same app behavior, but data is not durable like a database.
+- For production persistence, move orders/menu/today data to DynamoDB.
 
 ## AWS deployment (quick start)
 

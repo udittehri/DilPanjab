@@ -1,12 +1,15 @@
 const express = require('express');
 const fs = require('fs/promises');
+const fsNative = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ADMIN_PIN = String(process.env.ADMIN_PIN || '1010').trim();
-const DB_PATH = path.join(__dirname, 'data', 'db.json');
+const SOURCE_DB_PATH = path.join(__dirname, 'data', 'db.json');
+const TEMP_DB_PATH = path.join('/tmp', 'dilpanjab', 'db.json');
+let DB_PATH = SOURCE_DB_PATH;
 const DEFAULT_COLLECTION_TIME = '7:00 PM';
 
 let writeQueue = Promise.resolve();
@@ -55,6 +58,26 @@ function cleanImageUrl(value) {
     return url;
   }
   return '';
+}
+
+async function prepareDbPath() {
+  try {
+    await fs.access(SOURCE_DB_PATH, fsNative.constants.W_OK);
+    DB_PATH = SOURCE_DB_PATH;
+    return;
+  } catch (error) {
+    // Read-only bundle environments (such as Amplify compute) must use /tmp.
+  }
+
+  await fs.mkdir(path.dirname(TEMP_DB_PATH), { recursive: true });
+
+  try {
+    await fs.access(TEMP_DB_PATH, fsNative.constants.F_OK);
+  } catch (error) {
+    await fs.copyFile(SOURCE_DB_PATH, TEMP_DB_PATH);
+  }
+
+  DB_PATH = TEMP_DB_PATH;
 }
 
 async function readDb() {
@@ -320,7 +343,15 @@ app.get('*', (_req, res) => {
   return res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`DilPanjab app running on http://localhost:${PORT}`);
-});
+prepareDbPath()
+  .then(() => {
+    app.listen(PORT, () => {
+      // eslint-disable-next-line no-console
+      console.log(`DilPanjab app running on http://localhost:${PORT} (db: ${DB_PATH})`);
+    });
+  })
+  .catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error('Failed to initialize database path', error);
+    process.exit(1);
+  });
